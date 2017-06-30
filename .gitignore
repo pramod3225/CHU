@@ -1,0 +1,6 @@
+.idea
+node_modules
+public/src/**/*.js
+jspm_packages
+npm-debug.log
+debug.log
