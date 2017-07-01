@@ -11,7 +11,7 @@ import { OrderService } from './order.service';
     styleUrls: ['order.component.css'],
     providers: [OrderService]
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit {    
     currentTableNo: String = "";
     currentEmloyee: String = "";
     orderItems: OrderItem[];
