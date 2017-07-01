@@ -4,6 +4,8 @@ var path = require('path');
 var mongoose = require('./mongoose-conn');
 var schema = require('./schema');
 var UserModel = mongoose.model(schema.CollectionTypes.User, schema.User);
+var HtlModel = mongoose.model(schema.CollectionTypes.Htl, schema.htl);
+var OrderModel = mongoose.model(schema.CollectionTypes.Order, schema.Order);
 var jwt = require('jsonwebtoken');
 var config = require('../config');
 
@@ -15,6 +17,32 @@ router.get('/home', function (req, res) {
     res.render('index');
 });
 
+router.get('/api/getdetail',function(req,res){
+    HtlModel.findOne({},function(err,result){
+        if (err) return console.log(err);
+        res.send(result);
+    });
+});
+
+router.get('/api/orders/:tableNo',function(req,res){
+    var tblNo = req.params.tableNo;    
+    OrderModel.findOne({tableNo:tblNo, status:"open"},function(err,result){
+        if (err) return console.log(err);
+        console.log(result);
+        res.send(result);
+    });
+});
+router.post('/api/orders',function(req,res){
+    var postData = req.body;
+    OrderModel.update(
+        {tableNo: postData.tableNo,EmpName:postData.EmpName,status:"open"},
+        {$push: {"orderItems": postData.orderItem }},
+        {upsert:true},
+        function(err,result){
+            if (err) return console.log(err);
+            res.send(result);
+    });
+});
 router.post('/auth', function (req, res) {
     var userModel = req.body;
     var action = userModel.action;

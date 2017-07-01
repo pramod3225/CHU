@@ -12,8 +12,8 @@ import { OrderService } from './order.service';
     providers: [OrderService]
 })
 export class OrderComponent implements OnInit {
-    currentTableNo: Number;
-    currentEmloyee: String;
+    currentTableNo: String = "";
+    currentEmloyee: String = "";
     orderItems: OrderItem[];
     newEditOrder: OrderItem ;
     
@@ -21,9 +21,8 @@ export class OrderComponent implements OnInit {
     constructor(private orderService: OrderService) { }
 
     ngOnInit(): void {
-        this.setNewOrderEmpty();
-        //this.orderService.getOrders().then(orders => this.orderItems = orders);
-        this.orderService.getOrdersByTableNo('2').then(tblOrder => this.orderItems = tblOrder.orderItems);
+        this.setNewOrderEmpty();       
+        this.orderService.getOrdersByTableNo(this.currentTableNo).subscribe(tblOrder => this.orderItems = tblOrder.orderItems);
     }
     keyDownFunction(event: any) {
         if (event.keyCode == 13) {
@@ -31,8 +30,10 @@ export class OrderComponent implements OnInit {
                 
             }
             else{
+                this.orderService.addOrderToTableNo(this.currentTableNo,this.currentEmloyee,this.newEditOrder);
                 this.orderItems.push(this.newEditOrder);
                 this.setNewOrderEmpty();
+                
             } 
         }
     }
@@ -47,6 +48,12 @@ export class OrderComponent implements OnInit {
     }
     isNewOrderEmpty(){
         return this.newEditOrder.itemCode == "" || this.newEditOrder.itemName == "" || this.newEditOrder.rate == null;
+    }
+    onChangeTable(event:any){
+        this.orderService.getOrdersByTableNo(this.currentTableNo).subscribe(tblOrder => {
+            this.orderItems = tblOrder.orderItems;
+            this.currentEmloyee= tblOrder.EmpName
+        });
     }
 
 }

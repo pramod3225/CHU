@@ -12,11 +12,11 @@
                             <div class="row">
                                 <div class="col-lg-2">
                                     <div>Table</div>
-                                    <input type="number" class="form-control input-sm" name="table-number" min="0" max="25" autofocus style="width:60px;">
+                                    <input type="number" [(ngModel)]="currentTableNo"  (change)="onChangeTable($event)" class="form-control input-sm" name="table-number" min="0" max="25" autofocus  style="width:60px;">
                                 </div>
                                 <div class="col-lg-6">
                                     <div>Employee</div>
-                                    <input type="text" class="form-control input-sm" name="table-employee" list="employees" style="width:250px;">
+                                    <input type="text" [(ngModel)]="currentEmloyee" class="form-control input-sm" name="table-employee" list="employees"  style="width:250px;">
                                     <datalist id="employees">
                                         <option value="pramod">
                                         <option value="Vinod">

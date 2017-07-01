@@ -1,6 +1,7 @@
 .idea
 node_modules
 public/src/**/*.js
+**/*.js.map
 jspm_packages
 npm-debug.log
 debug.log

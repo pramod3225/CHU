@@ -10,6 +10,6 @@ export class OrderItem {
 export class TableOrder{
     tableNo : String;
     EmpName: String;    
-    isBillGenerated :boolean = false;
+    status :String;
     orderItems :OrderItem[]=[];
 }
