@@ -11,9 +11,8 @@ var config = require('../config');
 router.get('/', function (req, res) {
     res.render('login');
 });
-router.get('/home',isAuthenticated, function (req, res) {
-    //TODO: Remove hard coding of path
-    res.sendFile('/home/pramod/Documents/HBOSS/public/src/index.html');
+router.get('/home', function (req, res) {   
+    res.render('index');
 });
 
 router.post('/auth', function (req, res) {
