@@ -28,12 +28,15 @@ router.get('/api/orders/:tableNo',function(req,res){
     var tblNo = req.params.tableNo;    
     OrderModel.findOne({tableNo:tblNo, status:"open"},function(err,result){
         if (err) return console.log(err);
-        console.log(result);
+        if (!result) {            
+            return res.send(new OrderModel());
+        }
         res.send(result);
     });
 });
 router.post('/api/orders',function(req,res){
     var postData = req.body;
+    console.log(postData);
     OrderModel.update(
         {tableNo: postData.tableNo,EmpName:postData.EmpName,status:"open"},
         {$push: {"orderItems": postData.orderItem }},

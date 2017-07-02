@@ -30,7 +30,8 @@ export class OrderComponent implements OnInit {
                 
             }
             else{
-                this.orderService.addOrderToTableNo(this.currentTableNo,this.currentEmloyee,this.newEditOrder);
+                this.orderService.addOrderToTableNo(this.currentTableNo,this.currentEmloyee,this.newEditOrder)
+                .subscribe(r=>{});
                 this.orderItems.push(this.newEditOrder);
                 this.setNewOrderEmpty();
                 
