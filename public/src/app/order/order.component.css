@@ -16,3 +16,8 @@
 .table>tbody>tr.edit-item>td, .table>tbody>tr.edit-item>th,   .table>thead>tr.edit-item>td, .table>thead>tr.edit-item>th {
     padding: 0;
 }
+.order-count{
+    border-bottom: 1px solid lightgray;
+    padding: 5px;
+    margin-right: 15px;
+}

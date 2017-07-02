@@ -23,7 +23,15 @@ router.get('/api/getdetail',function(req,res){
         res.send(result);
     });
 });
-
+router.get('/api/orders',function(req,res){        
+    OrderModel.find(
+    {status:"open",tableNo:{$ne:null}},
+    {EmpName:1,tableNo:1},
+    function(err,result){
+        if (err) return console.log(err);        
+        res.send(result);
+    });
+});
 router.get('/api/orders/:tableNo',function(req,res){
     var tblNo = req.params.tableNo;    
     OrderModel.findOne({tableNo:tblNo, status:"open"},function(err,result){

@@ -1,15 +1,15 @@
 export class OrderItem {
-    itemCode: String;
-    itemName: String;
-    quantity: Number;
-    rate: Number;
-    customisation: String;
+    itemCode: string;
+    itemName: string;
+    quantity: number;
+    rate: number;
+    customisation: string;
     
 }
 
 export class TableOrder{
-    tableNo : String;
-    EmpName: String;    
-    status :String;
+    tableNo : string;
+    EmpName: string;    
+    status :string;
     orderItems :OrderItem[]=[];
 }

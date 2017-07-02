@@ -37,13 +37,17 @@ export class OrderService {
             customisation: ""
         });
     }
-
-    getOrdersByTableNo(tableNo:String):Observable<TableOrder>{
+    getTablesInOrder():Observable<any[]>{
+        let apiUrl = 'api/orders';
+        return this.http.get(apiUrl).map(this.extractData).catch(this.handleError);
+        
+    }
+    getOrdersByTableNo(tableNo:string):Observable<TableOrder>{
         let apiUrl = 'api/orders/'+tableNo;
         return this.http.get(apiUrl).map(this.extractData).catch(this.handleError);
         
     }
-    addOrderToTableNo(tableNo: String, empName: String, orderItem: OrderItem): Observable<any> {        
+    addOrderToTableNo(tableNo: string, empName: string, orderItem: OrderItem): Observable<any> {        
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let postData = {tableNo:tableNo,EmpName:empName,orderItem:orderItem};

@@ -12,17 +12,34 @@ import { OrderService } from './order.service';
     providers: [OrderService]
 })
 export class OrderComponent implements OnInit {    
-    currentTableNo: String = "";
-    currentEmloyee: String = "";
+    currentTableNo: string = "";
+    tables:any = [];
+    employees:any[]=[];
+    currentEmloyee: string = "";
     orderItems: OrderItem[];
     newEditOrder: OrderItem ;
+    acTablesInOrder :string[] = [];
+    nonAcTablesInOrder :string[] = [];
+    takeAwayOrder :number=0;
     
 
     constructor(private orderService: OrderService) { }
 
     ngOnInit(): void {
-        this.setNewOrderEmpty();       
-        this.orderService.getOrdersByTableNo(this.currentTableNo).subscribe(tblOrder => this.orderItems = tblOrder.orderItems);
+        this.setNewOrderEmpty();   
+        this.orderService.getTablesAndEmpDetails().subscribe(htlDetail =>{
+             this.tables = htlDetail.tables,
+             this.employees = htlDetail.EmpList
+        });
+        this.orderService.getTablesInOrder().subscribe(tbls =>{
+             for (let i = 0; i < tbls.length; i++) {
+                 this.addCurrTblToCategory(tbls[i].tableNo);
+             }
+        });
+            
+        this.orderService.getOrdersByTableNo(this.currentTableNo).subscribe(tblOrder => 
+            this.orderItems = tblOrder.orderItems
+        );        
     }
     keyDownFunction(event: any) {
         if (event.keyCode == 13) {
@@ -30,9 +47,9 @@ export class OrderComponent implements OnInit {
                 
             }
             else{
-                this.orderService.addOrderToTableNo(this.currentTableNo,this.currentEmloyee,this.newEditOrder)
-                .subscribe(r=>{});
+                this.orderService.addOrderToTableNo(this.currentTableNo,this.currentEmloyee,this.newEditOrder).subscribe(r=>{});
                 this.orderItems.push(this.newEditOrder);
+                this.addCurrTblToCategory(this.currentTableNo);
                 this.setNewOrderEmpty();
                 
             } 
@@ -55,6 +72,29 @@ export class OrderComponent implements OnInit {
             this.orderItems = tblOrder.orderItems;
             this.currentEmloyee= tblOrder.EmpName
         });
+    }
+    getTableType(tableNo:number):number{
+        for (var i = 0; i < this.tables.length; i++) {
+            if(this.tables[i].tblNo == tableNo) return this.tables[i].ac;           
+        }
+       return -10;       
+    }
+    addCurrTblToCategory(tblNo:string):void{
+        let tblType = this.getTableType(parseInt(tblNo));
+                 switch (tblType) {
+                     case 1:
+                         if(this.acTablesInOrder.indexOf(tblNo)===-1)this.acTablesInOrder.push(tblNo);
+                         break;
+                    case 0:
+                         if(this.nonAcTablesInOrder.indexOf(tblNo)===-1)this.nonAcTablesInOrder.push(tblNo);
+                         break;
+                    case -1:
+                         ++this.takeAwayOrder;
+                         break;
+                     default:                     
+                         break;
+                 }                
+
     }
 
 }
