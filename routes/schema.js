@@ -6,9 +6,7 @@ exports.User = new Schema({
     Name: String,    
     Email: String,
     Password: String,
-    CreationDate: Schema.Types.Mixed,
     IsActive: Boolean,
-    Role: String,
     IsDeleted: Boolean
 });
 exports.htl = new Schema({

@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var app = express();
 // view engine setup
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3005);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //    saveUninitialized: false
 //};
 //app.use(session(sessionOptions));
-var server = http.createServer(app).listen(3000, function () {
+var server = http.createServer(app).listen(3005, function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 //require("./routes/nmfp-socket")(server);
